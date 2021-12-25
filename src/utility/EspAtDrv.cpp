@@ -789,6 +789,14 @@ uint8_t EspAtDrvClass::connect(const char* type, const char* host, uint16_t port
     lastErrorCode = EspAtDrvError::LINK_ALREADY_CONNECTED;
     return NO_LINK;
   }
+  if (type == "SSL") {
+    cmd->print(F("AT+CIPSSLCSNI="));
+    cmd->print(linkId);
+    cmd->print(F(",\""));
+    cmd->print(host);
+    cmd->print(F("\""));
+    sendCommand();
+  }
   cmd->print(F("AT+CIPSTART="));
   cmd->print(linkId);
   cmd->print(F(",\""));
